@@ -1,0 +1,11 @@
+miner.setEtherbase(personal.listAccounts[0])
+miner.start()
+admin.addPeer("enode://b63b38335f5d573789805c1885db77e4a6d56b55b44ab770585769d777843c306533ab03395b134db4e2aeddcbd0b52d653e2234cf5fd121e1076c9bab2c35cd@127.0.0.1:30303?discport=0")
+admin.peers
+admin.addPeer("enode://585eecda2c3575589799a4dd285c14734344c6e8fc6a826e3f87910671f15cdb60807e18563777308f5c83063fe64dd55e4fe817669d1dc8dfcb57af68b03889@127.0.0.1:30302?discport=0")
+admin.peers
+net.peerCount
+loadScript("./initchaincode.js")
+pdsautomation.citizendb(pdsautomation.citizenIndex(0))
+pdsautomation.dealerdb(0x2a4d3b2b4373ad15a772eef2403ce2537958151a)
+miner.stop()

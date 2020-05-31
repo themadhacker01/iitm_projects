@@ -1,0 +1,34 @@
+
+admin.peers
+admin.addPeer("enode://759d595404fcd7d29dcdd088b947b15f969d82a2d97360364fc8c2292d6c5a5f2a1e6f5a83ff63b192f4a2c2528f47298217d935ae1699131ac209e057d674a3@127.0.0.1:30303?discport=0")
+admin.peers
+net.peerCount
+eth.getBalance(eth.coinbase)
+admin.peers
+net.peerCount
+miner.setEtherbase(personal.listAccounts[0])
+miner.start()
+eth.getBalance(eth.coinbase)
+miner.stop()
+miner.setEtherbase(personal.listAccounts[0])
+miner.start()
+miner.stop()
+net.peerCount
+miner.start()
+net.peerCount
+admin.peers
+net.peerCount
+admin.peers
+miner.stop()
+admin.peers
+miner.start()
+admin.peers
+miner.stop()
+miner.start()
+admin.peers
+pdsautomation.registerDealer(0, 0x2a4d3b2b4373ad15a772eef2403ce2537958151a, "123456789012", 10101, {from: eth.accounts[0], gas: 100000})
+loadScript("./initchaincode.js")
+pdsautomation.registerDealer(0, 0x2a4d3b2b4373ad15a772eef2403ce2537958151a, "123456789012", 10101, {from: eth.accounts[0], gas: 100000})
+pdsautomation.dealerdb(0x2a4d3b2b4373ad15a772eef2403ce2537958151a)
+pdsautomation.payDealer(0, 10, 0, 10101,{from: eth.accounts[0], gas: 100000})
+miner.stop()

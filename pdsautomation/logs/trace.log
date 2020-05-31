@@ -1,0 +1,12 @@
+I0107 01:48:02.032901 ethdb/database.go:83] Allotted 128MB cache and 1024 file handles to /home/pkarthik/Desktop/Softwares/Blockchain/pdsautomation/admin/testnet/geth/chaindata
+I0107 01:48:02.141628 ethdb/database.go:176] closed db:/home/pkarthik/Desktop/Softwares/Blockchain/pdsautomation/admin/testnet/geth/chaindata
+I0107 01:48:02.143740 node/node.go:176] instance: Geth/v1.5.6-unstable-17182732/linux/go1.7
+I0107 01:48:02.143780 ethdb/database.go:83] Allotted 128MB cache and 1024 file handles to /home/pkarthik/Desktop/Softwares/Blockchain/pdsautomation/admin/testnet/geth/chaindata
+I0107 01:48:02.171871 core/genesis.go:93] Genesis block already in chain. Writing canonical number
+I0107 01:48:02.171955 eth/backend.go:280] Successfully wrote custom genesis block: 41941023680923e0fe4d74a34bdac8141f2540e3ae90623718e47d66d1ca4a2d
+I0107 01:48:02.180075 eth/backend.go:191] Protocol Versions: [63 62], Network Id: 10454
+I0107 01:48:02.180286 eth/backend.go:219] Chain config: {ChainID: 3 Homestead: 0 DAO: <nil> DAOSupport: true EIP150: 0 EIP155: 10 EIP158: 10}
+I0107 01:48:02.180892 core/blockchain.go:216] Last header: #432 [b80dd97d…] TD=434504289
+I0107 01:48:02.180913 core/blockchain.go:217] Last block: #432 [b80dd97d…] TD=434504289
+I0107 01:48:02.180927 core/blockchain.go:218] Fast block: #432 [b80dd97d…] TD=434504289
+I0107 01:48:02.181172 miner/worker.go:427] We are too far in the future. Waiting for 12h32m14s

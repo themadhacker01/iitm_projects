@@ -1,0 +1,120 @@
+Useful Links
+---------------------------------------------------------------------
+
+https://ethereum.stackexchange.com/questions/7033/how-to-connect-to-geth-from-two-local-machines-ethereum
+https://github.com/ethereum/go-ethereum/issues/19494
+https://ethereum.stackexchange.com/questions/7033/how-to-connect-to-geth-from-two-local-machines-ethereum
+https://github.com/ethereum/go-ethereum/wiki/Connecting-to-the-network
+https://github.com/ethereum/go-ethereum/wiki/Setting-up-private-network-or-local-cluster
+http://ethdocs.org/en/latest/network/test-networks.html#geth-go-client
+https://medium.com/coinmonks/how-to-set-up-a-private-ethereum-testnet-blockchain-using-geth-and-homebrew-1106a27e8e1e
+
+
+INSTRUCTIONS
+---------------------------------------------------------------------
+
+a) In "pdsautomation" delete the "geth" and "keystore" folders in ./{Center, State, Dealer}
+
+b) Replace all account addresses and peer node addresses in addPeer() in each console command
+
+net.peerCount
+admin.peers
+net.listening
+
+
+Terminal1 (Center)
+---------------------------------------------------------------------
+geth --identity "MyNetwork" --rpc --rpcport "8080" --rpccorsdomain "*" --datadir "./Center" --port "30303" --nodiscover --rpcapi "db,eth,net,web3" --networkid 1999 init ./customgenesis.json
+
+geth --identity "MyNetwork" --rpc --rpcport "8080" --rpccorsdomain "*" --datadir "./Center" --port "30303" --nodiscover --rpcapi "db,eth,net,web3" --networkid 1999 account new
+{7c395265121ed6e9ff6dd9c852d47da3c32aee6e}
+
+geth --identity "MyNetwork" --rpc --rpcport "8080" --rpccorsdomain "*" --datadir "./Center" --port "30303" --nodiscover --rpcapi "db,eth,net,web3" --networkid 1999 --unlock 0 console
+
+miner.setEtherbase(personal.listAccounts[0])
+miner.start()
+loadScript("./PDSAutomation.js")
+contract address:  0x725fb37b1ad13807115cca2b95b8157e293de8b2 --- put this address in initchaincode.js and registerCitizens.js
+
+
+Terminal2 (Center)
+---------------------------------------------------------------------
+sh createCitizenAccounts.sh ./CitizenDatabase/CitizenDB.xls 111111
+
+
+Terminal1 (Center)
+---------------------------------------------------------------------
+Test: pdsautomation.citizendb(pdsautomation.citizenIndex(0))
+pdsautomation.monthlySubsidyAlloc({from: eth.accounts[0], gas: 100000});
+
+
+Terminal3 (State)
+---------------------------------------------------------------------
+geth --identity "MyNetwork" --rpc --rpcport "8081" --rpccorsdomain "*" --datadir "./State" --port "30302" --nodiscover --rpcapi "db,eth,net,web3" --networkid 1999 init ./customgenesis.json
+
+geth --identity "MyNetwork" --rpc --rpcport "8081" --rpccorsdomain "*" --datadir "./State" --port "30302" --nodiscover --rpcapi "db,eth,net,web3" --networkid 1999 account new
+{0898dbcf6f790d2f106eafa971807de6896886cd}
+
+
+Terminal1 (Center)
+---------------------------------------------------------------------
+pdsautomation.registerStateOfficial(0x0898dbcf6f790d2f106eafa971807de6896886cd, "123456789012", 10101, {from: eth.accounts[0], gas: 100000})
+pdsautomation.statedb(pdsautomation.stateIndex(0))
+
+
+Terminal3 (State)
+---------------------------------------------------------------------
+geth --identity "MyNetwork" --rpc --rpcport "8081" --rpccorsdomain "*" --datadir "./State" --port "30302" --nodiscover --rpcapi "db,eth,net,web3" --networkid 1999 --unlock 0 console
+
+miner.setEtherbase(personal.listAccounts[0])
+miner.start()
+loadScript("./initchaincode.js")
+
+admin.addPeer("enode://b63b38335f5d573789805c1885db77e4a6d56b55b44ab770585769d777843c306533ab03395b134db4e2aeddcbd0b52d653e2234cf5fd121e1076c9bab2c35cd@127.0.0.1:30303?discport=0")
+
+Check: pdsautomation.statedb(0x0898dbcf6f790d2f106eafa971807de6896886cd)
+
+
+Terminal4 (Dealer)
+---------------------------------------------------------------------
+geth --identity "MyNetwork" --rpc --rpcport "8082" --rpccorsdomain "*" --datadir "./Dealer" --port "30301" --nodiscover --rpcapi "db,eth,net,web3" --networkid 1999 init ./customgenesis.json
+
+geth --identity "MyNetwork" --rpc --rpcport "8082" --rpccorsdomain "*" --datadir "./Dealer" --port "30301" --nodiscover --rpcapi "db,eth,net,web3" --networkid 1999 init account new
+{2a4d3b2b4373ad15a772eef2403ce2537958151a}
+
+geth --identity "MyNetwork" --rpc --rpcport "8082" --rpccorsdomain "*" --datadir "./Dealer" --port "30301" --nodiscover --rpcapi "db,eth,net,web3" --networkid 1999 --unlock 0 console
+
+admin.addPeer("enode://b63b38335f5d573789805c1885db77e4a6d56b55b44ab770585769d777843c306533ab03395b134db4e2aeddcbd0b52d653e2234cf5fd121e1076c9bab2c35cd@127.0.0.1:30303?discport=0")
+
+admin.addPeer("enode://585eecda2c3575589799a4dd285c14734344c6e8fc6a826e3f87910671f15cdb60807e18563777308f5c83063fe64dd55e4fe817669d1dc8dfcb57af68b03889@127.0.0.1:30302?discport=0")
+
+miner.setEtherbase(personal.listAccounts[0])
+miner.start()
+loadScript("./initchaincode.js")
+
+
+Terminal3 (State)
+---------------------------------------------------------------------
+pdsautomation.registerDealer(0, 0x2a4d3b2b4373ad15a772eef2403ce2537958151a, "123456789012", 10101, {from: eth.accounts[0], gas: 100000})
+pdsautomation.dealerdb(0x2a4d3b2b4373ad15a772eef2403ce2537958151a)
+pdsautomation.payDealer(0, 10, 0, 10101,{from: eth.accounts[0], gas: 100000})
+
+
+Terminal1 (Center)
+---------------------------------------------------------------------
+Check: pdsautomation.citizendb(pdsautomation.citizenIndex(0))
+
+
+Terminal4 (Dealer)
+---------------------------------------------------------------------
+Check: pdsautomation.dealerdb(0x2a4d3b2b4373ad15a772eef2403ce2537958151a)
+pdsautomation.payState(10, 0, 10101,{from: eth.accounts[0], gas: 100000})
+Check: pdsautomation.dealerdb(0x2a4d3b2b4373ad15a772eef2403ce2537958151a)
+Check: pdsautomation.statedb(0x0898dbcf6f790d2f106eafa971807de6896886cd)
+
+
+Terminal3 (State)
+---------------------------------------------------------------------
+pdsautomation.payCenter(100, 0, 10101, {from: eth.accounts[0], gas: 100000})
+Check: pdsautomation.statedb(0x0898dbcf6f790d2f106eafa971807de6896886cd)
+Check: pdsautomation.final_balance()

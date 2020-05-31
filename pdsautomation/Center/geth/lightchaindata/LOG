@@ -1,0 +1,6 @@
+=============== Aug 9, 2019 (IST) ===============
+17:39:50.268655 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+17:39:50.479865 db@open opening
+17:39:50.480559 version@stat F·[] S·0B[] Sc·[]
+17:39:50.560599 db@janitor F·2 G·0
+17:39:50.560655 db@open done T·80.766207ms
